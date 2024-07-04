@@ -3,7 +3,7 @@ import { ConfigType } from "@/Types/ConfigType";
 export const defaultConfig: ConfigType = {
   priceOfKm: 0.5,
   numberOfKm: 1,
-  day: "Monday",
+  day: "Lundi",
   hour: 0,
   isStudent: false,
   age: 0,

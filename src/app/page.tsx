@@ -24,19 +24,20 @@ export default function Home() {
   };
 
   useEffect(() => {
+    console.log(taxiRideConfig);
     const calculatedPrice = calculatePrice();
     setCalculatedPrice(calculatedPrice);
   }, [taxiRideConfig]);
 
   return (
-    <main className="flex flex-col items-center justify-between p-24">
-      <h1 className="text-3xl font-bold mb-10">
+    <main className="flex flex-col items-center justify-between sm:p-24">
+      <h1 className="text-3xl font-bold my-10 text-center px-4">
         Calculateur de prix de courses
       </h1>
-      <div className="sm:p-[64px] p-4 rounded-lg sm:border w-full sm:w-[700px] flex flex-col gap-10">
+      <div className="sm:p-[64px] p-4 rounded-lg sm:border w-full sm:w-[600px] flex flex-col gap-10">
         <Input
           type="number"
-          placeholder="Prix du km"
+          placeholder="Prix du kilomètre"
           min={0}
           onChange={(e) =>
             setTaxiRideConfig({
@@ -48,7 +49,7 @@ export default function Home() {
         <Input
           type="number"
           min={0}
-          placeholder="Nombre de km"
+          placeholder="Nombre de kilomètre(s)"
           onChange={(e) =>
             setTaxiRideConfig({
               ...taxiRideConfig,
@@ -68,11 +69,48 @@ export default function Home() {
             })
           }
         />
-        <div className="sm:flex sm:flex-row gap-4 sm:justify-between">
+        <div className="flex flex-col sm:flex-row gap-10 sm:gap-2 sm:justify-between">
+          <Select
+            onValueChange={(e) =>
+              setTaxiRideConfig({ ...taxiRideConfig, country: e })
+            }
+          >
+            <SelectTrigger className="sm:w-[160px] w-full">
+              <SelectValue placeholder="Choisir un pays" />
+            </SelectTrigger>
+            <SelectContent avoidCollisions={false} className="max-h-[225px]">
+              <SelectGroup>
+                <SelectLabel>Pays</SelectLabel>
+                {countries.map((country) => (
+                  <SelectItem key={country} value={country}>
+                    {country}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select
+            onValueChange={(e) =>
+              setTaxiRideConfig({ ...taxiRideConfig, day: e })
+            }
+          >
+            <SelectTrigger className="sm:w-[120px] w-full">
+              <SelectValue placeholder="Jour" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {daysOfTheWeek.map((day) => (
+                  <SelectItem key={day} value={day}>
+                    {day}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           <div className="flex items-center space-x-2">
             <Checkbox
               id="terms"
-              onChange={(e) =>
+              onClick={() =>
                 setTaxiRideConfig({
                   ...taxiRideConfig,
                   isStudent: !taxiRideConfig.isStudent,
@@ -86,35 +124,6 @@ export default function Home() {
               Je suis étudiant
             </label>
           </div>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Choisir un pays" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Pays</SelectLabel>
-                {countries.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Jour" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {daysOfTheWeek.map((day) => (
-                  <SelectItem key={day} value={day}>
-                    {day}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
         </div>
         <p>Prix de la course : {calculatedPrice}€</p>
       </div>
