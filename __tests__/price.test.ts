@@ -12,7 +12,7 @@ describe("Taxi ride in France and Spain with a senior", () => {
       age: 65,
       country: "Espagne",
     });
-    expect(result).toBe("195.00€");
+    expect(result).toBe("200.22€");
   });
 
   it("78 years old no discount or additional fees", async () => {
@@ -25,10 +25,67 @@ describe("Taxi ride in France and Spain with a senior", () => {
       age: 78,
       country: "France",
     });
-    expect(result).toBe("50.00€");
+    expect(result).toBe("46.00€");
   });
 });
 
+describe("Taxi ride in France and Spain with a student", () => {
+  it("normal student", async () => {
+    const result = await calculatePrice({
+      priceOfKm: 3,
+      numberOfKm: 65,
+      day: "Dimanche",
+      hour: 22,
+      isStudent: true,
+      age: 19,
+      country: "Espagne",
+    });
+    expect(result).toBe("217.63€");
+  });
+
+  it("student with 0 km", async () => {
+    const result = await calculatePrice({
+      priceOfKm: 0,
+      numberOfKm: 10,
+      day: "Lundi",
+      hour: 10,
+      isStudent: true,
+      age: 20,
+      country: "France",
+    });
+    expect(result).toBe("0.00€");
+  });
+});
+
+describe("Taxi ride on Sunday", () => {
+  it("Sunday at normal hour", async () => {
+    const result = await calculatePrice({
+      priceOfKm: 10,
+      numberOfKm: 15,
+      day: "Dimanche",
+      hour: 15,
+      isStudent: true,
+      age: 19,
+      country: "Espagne",
+    });
+    expect(result).toBe("167.41€");
+  });
+
+  it("Sunday at night", async () => {
+    const result = await calculatePrice({
+      priceOfKm: 10,
+      numberOfKm: 15,
+      day: "Dimanche",
+      hour: 4,
+      isStudent: true,
+      age: 19,
+      country: "Espagne",
+    });
+    expect(result).toBe("249.44€");
+  });
+});
+
+// * NULL VALUES
 describe("Null value in config", () => {
   it("priceOfKm is missing (null)", async () => {
     const result = await calculatePrice({

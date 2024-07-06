@@ -17,13 +17,14 @@ export async function calculatePrice(config: ConfigType): Promise<string> {
       calculatePrice = calculatePrice * 1.32;
     }
 
-    if (config.hour >= 22 && config.hour <= 6) {
+    if (config.hour > 22 || config.hour < 6) {
       calculatePrice = calculatePrice * 1.49;
     }
 
     if (config.isStudent) {
       calculatePrice = calculatePrice * 0.89;
-    } else if (config.age >= 65) {
+    }
+    if (config.age >= 65) {
       calculatePrice = calculatePrice * 0.92;
     }
 
@@ -59,7 +60,7 @@ export async function calculatePrice(config: ConfigType): Promise<string> {
       );
     }
 
-    return initialPrice.toFixed(2).toString() + "€";
+    return calculatePrice.toFixed(2).toString() + "€";
   }
 
   return "Veuillez remplir tous les champs";

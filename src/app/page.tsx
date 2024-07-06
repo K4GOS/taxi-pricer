@@ -38,7 +38,7 @@ export default function Home() {
           <Label htmlFor="kmPrice">Prix KM</Label>
           <Input
             type="number"
-            placeholder="Prix du kilomètre"
+            placeholder="Prix du kilomètre (en €)"
             min={0}
             onChange={(e) =>
               setTaxiRideConfig({
