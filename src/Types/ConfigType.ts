@@ -1,16 +1,19 @@
+export type DayOfWeek =
+  | "Lundi"
+  | "Mardi"
+  | "Mercredi"
+  | "Jeudi"
+  | "Vendredi"
+  | "Samedi"
+  | "Dimanche"
+  | null;
+
 export interface ConfigType {
-  priceOfKm: number;
-  numberOfKm: number;
-  day:
-    | "Lundi"
-    | "Mardi"
-    | "Mercredi"
-    | "Jeudi"
-    | "Vendredi"
-    | "Samedi"
-    | "Dimanche";
-  hour: number;
+  priceOfKm: number | null;
+  numberOfKm: number | null;
+  day: DayOfWeek;
+  hour: number | null;
   isStudent: boolean;
-  age: number;
-  country: string;
+  age: number | null;
+  country: string | null;
 }
